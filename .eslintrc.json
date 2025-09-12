@@ -1,0 +1,22 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    "prefer-const": "error",
+    "no-unused-vars": "warn",
+    "no-console": "warn",
+    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/explicit-function-return-type": "warn",
+    "complexity": ["warn", 15],
+    "max-lines": ["warn", 300],
+    "max-params": ["warn", 4]
+  },
+  "env": {
+    "node": true,
+    "es2022": true
+  }
+}

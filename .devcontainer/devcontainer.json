@@ -1,0 +1,61 @@
+{
+  "name": "Autonomous Coding Environment",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:18",
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+  "postCreateCommand": "npm install -g @modelcontextprotocol/server-github && npm install -g eslint @typescript-eslint/parser @typescript-eslint/eslint-plugin && chmod +x .devcontainer/setup.sh && ./.devcontainer/setup.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.vscode-json",
+        "GitHub.copilot",
+        "ms-python.python",
+        "ms-vscode.vscode-eslint",
+        "ms-python.flake8",
+        "ms-python.pylint",
+        "bradlc.vscode-tailwindcss",
+        "esbenp.prettier-vscode"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "eslint.enable": true,
+        "eslint.autoFixOnSave": true,
+        "python.linting.enabled": true,
+        "python.linting.pylintEnabled": true,
+        "python.linting.flake8Enabled": true,
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+          "source.fixAll.eslint": true,
+          "source.fixAll.pylint": true
+        }
+      }
+    }
+  },
+  "forwardPorts": [3000, 3001],
+  "portsAttributes": {
+    "3000": {
+      "label": "Webhook Server",
+      "onAutoForward": "notify"
+    },
+    "3001": {
+      "label": "Slack Bot Server",
+      "onAutoForward": "notify"
+    }
+  },
+  "secrets": {
+    "GITHUB_TOKEN": {
+      "description": "GitHub Personal Access Token for MCP integration"
+    },
+    "WEBHOOK_SECRET": {
+      "description": "Secret for webhook authentication"
+    },
+    "SLACK_BOT_TOKEN": {
+      "description": "Slack Bot Token for integration"
+    },
+    "SLACK_SIGNING_SECRET": {
+      "description": "Slack Signing Secret for request verification"
+    }
+  }
+}

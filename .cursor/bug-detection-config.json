@@ -1,0 +1,41 @@
+{
+  "enabled": true,
+  "autoFix": {
+    "enabled": true,
+    "maxAttempts": 3,
+    "skipComplexIssues": true
+  },
+  "linting": {
+    "eslint": {
+      "enabled": true,
+      "autoFix": true,
+      "rules": {
+        "prefer-const": "error",
+        "no-unused-vars": "warn",
+        "no-console": "warn"
+      }
+    },
+    "pylint": {
+      "enabled": true,
+      "maxLineLength": 100,
+      "ignorePatterns": ["test_*.py", "*_test.py"]
+    }
+  },
+  "aiAnalysis": {
+    "enabled": true,
+    "detectionLevel": "comprehensive",
+    "includePerformance": true,
+    "includeSecurity": true,
+    "includeAccessibility": false
+  },
+  "reporting": {
+    "detailedReports": true,
+    "includeFixes": true,
+    "exportFormat": "json"
+  },
+  "thresholds": {
+    "maxErrorsBeforeManualReview": 5,
+    "maxWarningsToIgnore": 10,
+    "complexityThreshold": 15
+  }
+}
