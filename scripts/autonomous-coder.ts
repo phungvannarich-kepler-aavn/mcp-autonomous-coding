@@ -105,8 +105,8 @@ class AutonomousCoder {
           return;
         }
         
-        // Then checkout the remote branch
-        const gitCheckout = spawn('git', ['checkout', '-b', branchName, `origin/${branchName}`]);
+        // Then checkout the new branch locally
+        const gitCheckout = spawn('git', ['checkout', '-b', branchName]);
         gitCheckout.on('close', (code) => {
           if (code === 0) {
             console.log(`✅ Switched to branch: ${branchName}`);
