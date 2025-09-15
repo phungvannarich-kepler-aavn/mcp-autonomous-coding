@@ -387,7 +387,17 @@ if __name__ == "__main__":
         gitCommit.on('close', (commitCode) => {
           if (commitCode === 0) {
             console.log('✅ Changes committed successfully');
-            resolve();
+            
+            // Push the commit to GitHub
+            const gitPush = spawn('git', ['push', 'origin', branchName]);
+            gitPush.on('close', (pushCode) => {
+              if (pushCode === 0) {
+                console.log('✅ Changes pushed to GitHub');
+                resolve();
+              } else {
+                reject(new Error(`Git push failed with code ${pushCode}`));
+              }
+            });
           } else {
             reject(new Error(`Git commit failed with code ${commitCode}`));
           }
