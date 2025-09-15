@@ -489,7 +489,7 @@ ${fixed.map(bug => `- \`${bug.file}:${bug.line}\` - ${bug.message} (${bug.rule})
     // Send Slack notification if available
     if (process.env.SLACK_BOT_TOKEN) {
       try {
-        const { sendPRNotification } = await import('./slack-bot');
+        const { sendPRNotification } = await import('./slack-bot-placeholder');
         const channelId = process.env.SLACK_CHANNEL || '#dev-notifications';
         
         await sendPRNotification(channelId, requester, prUrl, bugReport, {
@@ -514,7 +514,7 @@ ${fixed.map(bug => `- \`${bug.file}:${bug.line}\` - ${bug.message} (${bug.rule})
     // Send error notification
     if (process.env.SLACK_BOT_TOKEN) {
       try {
-        const { sendSlackError } = await import('./slack-bot');
+        const { sendSlackError } = await import('./slack-bot-placeholder');
         const channelId = process.env.SLACK_CHANNEL || '#dev-notifications';
         
         await sendSlackError(channelId, request.requester, error);
