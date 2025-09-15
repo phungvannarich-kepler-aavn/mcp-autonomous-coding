@@ -10,6 +10,7 @@
     "test": "npm run build && node dist/scripts/test-autonomous-coder.js",
     "slack-bot": "npm run build && node dist/scripts/slack-bot.js",
     "webhook": "npm run build && node dist/scripts/webhook-server.js",
+    "dashboard": "npm run build && node dist/scripts/dashboard-server.js",
     "lint": "eslint scripts/**/*.ts",
     "lint:fix": "eslint scripts/**/*.ts --fix"
   },
