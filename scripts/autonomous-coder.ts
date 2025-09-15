@@ -499,14 +499,16 @@ ${fixed.map(bug => `- \`${bug.file}:${bug.line}\` - ${bug.message} (${bug.rule})
     // Send Slack notification if available
     if (process.env.SLACK_BOT_TOKEN) {
       try {
-        const { sendPRNotification } = await import('./slack-bot-placeholder');
+        const { SlackBot } = await import('./slack-bot');
+        const slackBot = new SlackBot();
         const channelId = process.env.SLACK_CHANNEL || '#dev-notifications';
         
-        await sendPRNotification(channelId, requester, prUrl, bugReport, {
+        await slackBot.sendPRNotification(channelId, requester, prUrl, bugReport, {
           repository: process.env.DEFAULT_REPO || '',
           task: 'Code generation completed',
           priority: 'medium',
-          requester: requester
+          requester: requester,
+          channelId: channelId
         });
       } catch (error) {
         console.error('Slack notification failed:', error);
@@ -524,10 +526,11 @@ ${fixed.map(bug => `- \`${bug.file}:${bug.line}\` - ${bug.message} (${bug.rule})
     // Send error notification
     if (process.env.SLACK_BOT_TOKEN) {
       try {
-        const { sendSlackError } = await import('./slack-bot-placeholder');
+        const { SlackBot } = await import('./slack-bot');
+        const slackBot = new SlackBot();
         const channelId = process.env.SLACK_CHANNEL || '#dev-notifications';
         
-        await sendSlackError(channelId, request.requester, error);
+        await slackBot.sendErrorNotification(channelId, request.requester, error);
       } catch (slackError) {
         console.error('Failed to send error notification:', slackError);
       }

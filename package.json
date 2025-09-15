@@ -8,6 +8,8 @@
     "start": "node dist/scripts/autonomous-coder.js",
     "dev": "ts-node scripts/autonomous-coder.ts",
     "test": "npm run build && node dist/scripts/test-autonomous-coder.js",
+    "slack-bot": "npm run build && node dist/scripts/slack-bot.js",
+    "webhook": "npm run build && node dist/scripts/webhook-server.js",
     "lint": "eslint scripts/**/*.ts",
     "lint:fix": "eslint scripts/**/*.ts --fix"
   },
@@ -24,6 +26,7 @@
   "license": "MIT",
   "dependencies": {
     "@octokit/rest": "^20.0.2",
+    "@slack/bolt": "^3.17.1",
     "@slack/web-api": "^7.0.2",
     "@slack/events-api": "^3.0.1",
     "express": "^4.18.2",
