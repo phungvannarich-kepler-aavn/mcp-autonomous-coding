@@ -295,7 +295,7 @@ if __name__ == "__main__":
 
   private async runPylint(): Promise<BugReport[]> {
     return new Promise((resolve) => {
-      const pylint = spawn('python', ['-m', 'pylint', '--output-format=json', '*.py'], {
+      const pylint = spawn('python3', ['-m', 'pylint', '--output-format=json', '*.py'], {
         stdio: ['ignore', 'pipe', 'pipe']
       });
       
