@@ -14,21 +14,24 @@ Create a fully autonomous coding workflow where you can send requests to update 
 
 ```mermaid
 flowchart LR
-    A[Your Request] --> B[GitHub Codespace]
-    B --> C[Cursor + MCP]
-    C --> D[Code Generation]
-    D --> E[Cursor Bug Detection]
-    E --> F{Bugs Found?}
-    F -->|Yes| G[Auto-Fix Bugs]
-    F -->|No| H[Git Operations]
-    G --> I[Re-run Bug Check]
-    I --> J{Clean?}
-    J -->|Yes| H
-    J -->|No| K[Flag for Manual Review]
-    H --> L[PR Creation]
-    K --> L
-    L --> M[Notification]
-    M --> N[Your Review]
+    A[Web Dashboard] --> B[Submit Request]
+    B --> C[GitHub Codespace]
+    C --> D[Cursor + MCP]
+    D --> E[Code Generation]
+    E --> F[Cursor Bug Detection]
+    F --> G{Bugs Found?}
+    G -->|Yes| H[Auto-Fix Bugs]
+    G -->|No| I[Git Operations]
+    H --> J[Re-run Bug Check]
+    J --> K{Clean?}
+    K -->|Yes| I
+    K -->|No| L[Flag for Manual Review]
+    I --> M[PR Creation]
+    L --> M
+    M --> N[Polling System]
+    N --> O[Status Update]
+    O --> P[Dashboard Refresh]
+    P --> Q[Your Review]
 ```
 
 ## 🏗️ Architecture Components
@@ -50,10 +53,12 @@ flowchart LR
 - Auto-fix capabilities for common issues
 - Quality assurance before PR creation
 
-### 4. **Request Interface**
-- Webhook endpoint for receiving requests
-- **Slack slash commands** for easy request submission
-- **Slack interactive buttons** for quick actions
+### 4. **Web Dashboard Interface**
+- Clean web UI for submitting code requests
+- Polling-based status updates (every 30 seconds)
+- Request history and tracking system
+- Direct links to generated PRs
+- No external dependencies or complex setup
 - Email-to-code conversion
 - API for programmatic requests
 

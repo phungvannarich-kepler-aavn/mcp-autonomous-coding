@@ -221,30 +221,69 @@ DEFAULT_REPO=phungvannarich-kepler-aavn/mcp-autonomous-coding
    - ✅ Pull Request creation successful: **PR #1 CREATED!**
    - ✅ End-to-end autonomous workflow **FULLY OPERATIONAL**
 
-## 🚀 **NEXT PHASE: Request Interface (Phase 3)**
+## 🚀 **NEXT PHASE: Web Dashboard Interface (Phase 3)**
 
-### **Priority 1: Slack Integration** 📱
-1. **Create Slack Bot Server**
-   - Replace placeholder with full Slack integration
-   - Implement slash commands (`/code-request`)
-   - Set up interactive notifications and buttons
+### **Priority 1: Web Dashboard** 🌐
+1. **Create Web Dashboard UI**
+   - Build clean, modern web interface
+   - Request submission form with validation
+   - Real-time status display and updates
 
-2. **Slack App Configuration**
-   - Create Slack app with proper scopes
-   - Configure bot tokens and signing secrets
-   - Set up webhook endpoints
+2. **Polling Status System**
+   - Implement GitHub API polling (30-second intervals)
+   - Track request progress and completion
+   - Display PR links and bug detection results
 
-### **Priority 2: Webhook Server** 🌐  
-1. **HTTP Server for External Requests**
-   - REST API for code generation requests
-   - Integration with autonomous coder
-   - Queue management system
+### **Priority 2: Request Management** 📊
+1. **Request Tracking System**
+   - Store request history and status
+   - Unique request IDs for tracking
+   - Progress indicators and timestamps
 
-2. **Multiple Input Methods**
-   - Slack slash commands
-   - HTTP API endpoints  
-   - GitHub Issues integration
-   - Email-to-code functionality
+2. **Status Polling Implementation**
+   - Check GitHub API every 30 seconds
+   - Update request status in real-time
+   - Handle rate limiting and errors gracefully
+
+## 📋 **Phase 3 Detailed Plan: Web Dashboard with Polling**
+
+### **Architecture Overview:**
+```
+Web Dashboard → Submit Request → Autonomous Coder → GitHub PR
+      ↑                                                    ↓
+   Polling ←── Status Updates ←── GitHub API ←── PR Created
+```
+
+### **Key Components:**
+1. **Web Interface** (`dashboard.html` + `dashboard.js`)
+   - Modern, responsive design
+   - Request form with dropdowns for language/repo
+   - Real-time status cards showing progress
+   - History view of all requests
+
+2. **Polling Service** (`polling-service.ts`)
+   - Check GitHub every 30 seconds for updates
+   - Track request status: Pending → Processing → Complete
+   - Update web UI with latest status
+
+3. **Request Tracker** (`request-tracker.ts`)
+   - Store requests with unique IDs
+   - Track: timestamp, status, branch name, PR URL
+   - Persist data between server restarts
+
+### **User Experience Flow:**
+1. **User opens web dashboard** → Clean interface loads
+2. **User fills form** → "Create login function", Python, my-repo
+3. **User clicks submit** → Request ID generated, status shows "Pending"
+4. **Polling starts** → Every 30s check if PR created
+5. **PR completed** → Status updates to "Complete" + PR link
+6. **User clicks PR link** → Reviews code in GitHub
+
+### **Benefits of Polling Approach:**
+- ✅ **Simple**: No webhooks, tunnels, or external services
+- ✅ **Reliable**: Works behind firewalls and NAT
+- ✅ **Self-contained**: Everything runs locally
+- ✅ **Flexible**: Easy to modify and extend
 
 ## 🎉 **CURRENT CAPABILITIES**
 
