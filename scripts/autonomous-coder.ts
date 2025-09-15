@@ -38,9 +38,13 @@ class AutonomousCoder {
       console.log(`📝 Creating branch: ${branchName}`);
       await this.createBranch(request.repository, branchName);
       
-      // 2. Generate code using Cursor + MCP
+      // 2. Generate code using Cursor Background Agent API
       console.log(`⚙️ Generating code for: ${request.task}`);
-      await this.generateCode(request.task, branchName);
+      const codeGenResult = await this.generateCode(request.task, branchName);
+      
+      // Store agent ID for tracking
+      console.log(`🤖 Agent ID: ${codeGenResult.agentId}`);
+      console.log(`📊 Initial Status: ${codeGenResult.status}`);
       
       // 3. Run bug detection and auto-fix
       console.log(`🔍 Running bug detection...`);
@@ -119,10 +123,59 @@ class AutonomousCoder {
     });
   }
 
-  private async generateCode(task: string, branch: string): Promise<void> {
-    // This is where we would integrate with Cursor's AI
-    // For now, we'll simulate code generation
-    console.log(`🤖 Simulating code generation for: ${task}`);
+  private async generateCode(task: string, branch: string): Promise<{ agentId: string; status: string }> {
+    // Use real Cursor Background Agent API for code generation
+    console.log(`🤖 Creating Cursor Background Agent for: ${task}`);
+    
+    try {
+      const { CursorAgentService } = await import('./cursor-agent-service');
+      const cursorService = new CursorAgentService();
+      
+      // Test API connection first
+      const isConnected = await cursorService.testConnection();
+      if (!isConnected) {
+        throw new Error('Failed to connect to Cursor API');
+      }
+      
+      // Create Background Agent with real Cursor AI
+      const agentResponse = await cursorService.createAgent({
+        task: task,
+        repository: process.env.DEFAULT_REPO || '',
+        language: 'auto-detect',
+        priority: 'medium',
+        requester: 'autonomous-coder',
+        branch: branch
+      });
+      
+      if (agentResponse.status === 'failed') {
+        throw new Error(agentResponse.error || 'Agent creation failed');
+      }
+      
+      console.log(`✅ Cursor Background Agent created: ${agentResponse.agentId}`);
+      console.log(`📝 Status: ${agentResponse.status}`);
+      console.log(`💬 Message: ${agentResponse.message}`);
+      
+      return {
+        agentId: agentResponse.agentId,
+        status: agentResponse.status
+      };
+      
+    } catch (error) {
+      console.error('Error with Cursor API, falling back to simulation:', error);
+      
+      // Fallback to simulation if Cursor API fails
+      await this.generateCodeSimulation(task, branch);
+      
+      return {
+        agentId: 'simulation-' + Date.now(),
+        status: 'completed'
+      };
+    }
+  }
+
+  private async generateCodeSimulation(task: string, branch: string): Promise<void> {
+    // Fallback simulation code generation
+    console.log(`🔄 Falling back to simulated code generation for: ${task}`);
     
     // Create a simple example file based on the task
     const fileName = this.getFileNameFromTask(task);

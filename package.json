@@ -11,6 +11,7 @@
     "slack-bot": "npm run build && node dist/scripts/slack-bot.js",
     "webhook": "npm run build && node dist/scripts/webhook-server.js",
     "dashboard": "npm run build && node dist/scripts/dashboard-server.js",
+    "test-cursor": "npm run build && node dist/scripts/test-cursor-api.js",
     "lint": "eslint scripts/**/*.ts",
     "lint:fix": "eslint scripts/**/*.ts --fix"
   },
