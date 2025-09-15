@@ -89,7 +89,34 @@ class AutonomousCoder {
       sha: defaultBranch.commit.sha
     });
     
+    // Switch to the new branch locally
+    await this.checkoutBranch(branchName);
+    
     console.log(`✅ Branch created: ${branchName}`);
+  }
+
+  private async checkoutBranch(branchName: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      // First fetch the latest changes
+      const gitFetch = spawn('git', ['fetch', 'origin']);
+      gitFetch.on('close', (fetchCode) => {
+        if (fetchCode !== 0) {
+          reject(new Error(`Git fetch failed with code ${fetchCode}`));
+          return;
+        }
+        
+        // Then checkout the remote branch
+        const gitCheckout = spawn('git', ['checkout', '-b', branchName, `origin/${branchName}`]);
+        gitCheckout.on('close', (code) => {
+          if (code === 0) {
+            console.log(`✅ Switched to branch: ${branchName}`);
+            resolve();
+          } else {
+            reject(new Error(`Git checkout failed with code ${code}`));
+          }
+        });
+      });
+    });
   }
 
   private async generateCode(task: string, branch: string): Promise<void> {
