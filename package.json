@@ -1,0 +1,46 @@
+{
+  "name": "mcp-autonomous-coding",
+  "version": "1.0.0",
+  "description": "AI-Powered Autonomous Coding Workflow with Slack Integration and Bug Detection",
+  "main": "scripts/autonomous-coder.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/scripts/autonomous-coder.js",
+    "dev": "ts-node scripts/autonomous-coder.ts",
+    "test": "npm run build && node dist/scripts/test-autonomous-coder.js",
+    "lint": "eslint scripts/**/*.ts",
+    "lint:fix": "eslint scripts/**/*.ts --fix"
+  },
+  "keywords": [
+    "autonomous-coding",
+    "mcp",
+    "github",
+    "slack",
+    "ai",
+    "automation",
+    "bug-detection"
+  ],
+  "author": "Autonomous Coding Workflow",
+  "license": "MIT",
+  "dependencies": {
+    "@octokit/rest": "^20.0.2",
+    "@slack/web-api": "^7.0.2",
+    "@slack/events-api": "^3.0.1",
+    "express": "^4.18.2",
+    "dotenv": "^16.3.1",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.0",
+    "@types/express": "^4.17.20",
+    "@types/cors": "^2.8.15",
+    "typescript": "^5.2.2",
+    "ts-node": "^10.9.1",
+    "@typescript-eslint/eslint-plugin": "^6.7.4",
+    "@typescript-eslint/parser": "^6.7.4",
+    "eslint": "^8.51.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
